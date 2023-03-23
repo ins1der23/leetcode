@@ -1,7 +1,7 @@
 ﻿using static Shared;
 
 
-string romanNumber = "XXXIX";
+string romanNumber = "CCXLVIII";
 char[] romanArray = ToCharAray(romanNumber);
 Console.WriteLine(ArrayJoinToString(romanArray));
 int[] toArabic = RomanToIntArray(romanArray);

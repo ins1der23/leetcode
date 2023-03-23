@@ -1,7 +1,7 @@
 using System.Linq;
 public class Shared
 {
-
+// преобразоваине string в char[];
     public static char[] ToCharAray(string text)
     {
         char[] someArray = new char[text.Length];
@@ -59,6 +59,4 @@ public class Shared
     {
         return $"[{String.Join(' ', array)}]";
     }
-
-
 }
