@@ -1,18 +1,16 @@
 ﻿int MaximumWealth(int[][] accounts)
 {
     int size = accounts.Length;
-    int[] sum = new int[size];
+    int maxSum = 0;
     for (int i = 0; i < size; i++)
     {
         int innerSize = accounts[i].Length;
-        for (int j = 0; j < innerSize; j++) sum[i] += accounts[i][j];
+        int currentSum = 0;
+        for (int j = 0; j < innerSize; j++) currentSum += accounts[i][j];
+        if(currentSum > maxSum) maxSum = currentSum;
     }
-    int max = sum[0];
-    for (int i = 1; i < size; i++)
-    {
-        if (sum[i] > max) max = sum[i];
-    }
-    return max;
+      
+    return maxSum;
 }
 
 int[] list1 = new int[4] { 1, 2, 3, 4 };
