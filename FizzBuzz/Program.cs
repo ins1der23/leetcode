@@ -1,6 +1,6 @@
 ﻿IList<string> FizzBuzz(int n)
 {
-string[] someList = new string[10000];
+string[] someList = new string[n];
 int i = someList.Length - 1;
 
 void FizzBuzzRec(string[] stringArray, int i = 0)
