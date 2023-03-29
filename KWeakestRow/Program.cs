@@ -8,22 +8,6 @@ int[][] CreateArray(int m, int n)
     return someArray;
 }
 
-void FillArrayRandomRec(int[][] anyArray)
-{
-    int height = anyArray.Length;
-    for (int i = 0; i < height; i++)
-    {
-        int length = anyArray[i].Length;
-        void FillString(int j = 0)
-        {
-            int onesLength = new Random().Next(1, length + 1);
-            if (j >= onesLength) return;
-            anyArray[i][j] = 1;
-            FillString(j + 1);
-        }
-        FillString();
-    }
-}
 
 void FillArrayRandomIter(int[][] anyArray)
 {
@@ -31,12 +15,11 @@ void FillArrayRandomIter(int[][] anyArray)
     for (int i = 0; i < height; i++)
     {
         int length = anyArray[i].Length;
-        int onesLength = new Random().Next(1, length + 1);
-        
+        int onesLength = new Random().Next(0, length + 1);
+
         for (int j = 0; j < onesLength; j++) anyArray[i][j] = 1;
     }
 }
-
 
 void ArrayToConsole(int[][] anyArray)
 {
@@ -44,18 +27,34 @@ void ArrayToConsole(int[][] anyArray)
     for (int i = 0; i < height; i++) Console.WriteLine(String.Join(" ", anyArray[i]));
 }
 
-int[][] someArray = CreateArray(10,10);
+int[] KWeakestRows(int[][] mat)
+{
+    int height = mat.Length;
+    int[] weakeatsRows = new int[height];
+    for (int i = 0; i < height; i++)
+    {
+        int length = mat[i].Length;
+        int j = 0;
+        for (j = 0; j < length; j++)
+        {
+            if(mat[i][j] == 1) weakeatsRows[i] = j+1;
+        }
+        
+    }
+    return weakeatsRows;
+}
+
+
+int[][] someArray = CreateArray(10, 10);
 Stopwatch sw = new Stopwatch();
-int[][] anotherArray = CreateArray(10,10);
 sw.Start();
-FillArrayRandomIter(anotherArray);
-sw.Stop();
-ArrayToConsole(anotherArray);
-Console.WriteLine($"{sw.ElapsedMilliseconds}");
-sw.Reset();
-sw.Start();
-FillArrayRandomRec(someArray);
+FillArrayRandomIter(someArray);
 sw.Stop();
 ArrayToConsole(someArray);
+sw.Start();
+int[] result = KWeakestRows(someArray);
+Console.WriteLine(String.Join(" ", result));
+sw.Stop();
 Console.WriteLine($"{sw.ElapsedMilliseconds}");
+
 
