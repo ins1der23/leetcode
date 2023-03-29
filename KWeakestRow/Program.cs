@@ -4,7 +4,7 @@ using System.Diagnostics;
 int[][] CreateArray(int m, int n)
 {
     int[][] someArray = new int[m][];
-    for (int i = 0; i < m; i++) someArray[i] = new int[m];
+    for (int i = 0; i < m; i++) someArray[i] = new int[n];
     return someArray;
 }
 
@@ -27,7 +27,7 @@ void ArrayToConsole(int[][] anyArray)
     for (int i = 0; i < height; i++) Console.WriteLine(String.Join(" ", anyArray[i]));
 }
 
-int[] KWeakestRows(int[][] mat)
+int[] KWeakestRows(int[][] mat, int k)
 {
     int sumsLength = mat.Length;
     int[] sumOfRow = new int[sumsLength];
@@ -40,38 +40,36 @@ int[] KWeakestRows(int[][] mat)
             if (mat[i][j] != 1) break;
         sumOfRow[i] = j;
     }
-    Console.WriteLine();
-    Console.WriteLine(String.Join(" ", sumOfRow));
-
-    int k = 5;
     var weakest = new List<int>();
+    int pivot = 0;
+    int min = 0;
+    for (int p = 0; p < sumsLength; p++)
+    {
+        if (sumOfRow[p] > sumOfRow[pivot]) pivot = p;
+    }
     for (int i = 0; i < k; i++)
     {
-        int max = sumOfRow.Max();
-        int pivot = Array.IndexOf(sumOfRow, max);
-        for (int j = 0; j < sumsLength; j++)
+        for (int p = 0; p < sumsLength; p++)
         {
-
-            if (!weakest.Contains(j) && sumOfRow[j] < sumOfRow[pivot])
+            if (sumOfRow[p] > sumOfRow[pivot]) pivot = p;
+        }
+        for (int j = sumsLength - 1; j >= 0; j--)
+        {
+            if (!weakest.Contains(j) && sumOfRow[j] < (sumOfRow[pivot] + 1))
                 pivot = j;
         }
         weakest.Add(pivot);
     }
-
-
-
-
-
-    int[] aInt = weakest.ToArray();
-    return aInt;
+    int[] weakestArray = weakest.ToArray();
+    return weakestArray;
 }
 
-int[][] someArray = CreateArray(5, 5);
+int[][] someArray = CreateArray(7, 3);
 Stopwatch sw = new Stopwatch();
 sw.Start();
 FillArrayRandomIter(someArray);
 ArrayToConsole(someArray);
-var result = KWeakestRows(someArray);
+var result = KWeakestRows(someArray, 6);
 Console.WriteLine();
 Console.WriteLine(String.Join(" ", result));
 sw.Stop();
