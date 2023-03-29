@@ -35,25 +35,23 @@ int[] KWeakestRows(int[][] mat)
     {
         int length = mat[i].Length;
         int j = 0;
-        for (j = 0; j < length; j++)
-        {
-            if(mat[i][j] == 1) weakeatsRows[i] = j+1;
-        }
-        
+        while (mat[i][j] == 1 && j < length - 1) j++;
+        weakeatsRows[i] = j;
+        if (mat[i][length - 1] == 1) weakeatsRows[i] = length;
     }
     return weakeatsRows;
 }
 
 
-int[][] someArray = CreateArray(10, 10);
+int[][] someArray = CreateArray(10000, 10000);
 Stopwatch sw = new Stopwatch();
 sw.Start();
 FillArrayRandomIter(someArray);
 sw.Stop();
-ArrayToConsole(someArray);
+// ArrayToConsole(someArray);
 sw.Start();
 int[] result = KWeakestRows(someArray);
-Console.WriteLine(String.Join(" ", result));
+// Console.WriteLine(String.Join(" ", result));
 sw.Stop();
 Console.WriteLine($"{sw.ElapsedMilliseconds}");
 
