@@ -29,29 +29,51 @@ void ArrayToConsole(int[][] anyArray)
 
 int[] KWeakestRows(int[][] mat)
 {
-    int height = mat.Length;
-    int[] weakeatsRows = new int[height];
-    for (int i = 0; i < height; i++)
+    int sumsLength = mat.Length;
+    int[] sumOfRow = new int[sumsLength];
+    for (int i = 0; i < sumsLength; i++)
     {
         int length = mat[i].Length;
         int j = 0;
-        while (mat[i][j] == 1 && j < length - 1) j++;
-        weakeatsRows[i] = j;
-        if (mat[i][length - 1] == 1) weakeatsRows[i] = length;
+
+        for (j = 0; j < length; j++)
+            if (mat[i][j] != 1) break;
+        sumOfRow[i] = j;
     }
-    return weakeatsRows;
+    Console.WriteLine();
+    Console.WriteLine(String.Join(" ", sumOfRow));
+
+    int k = 5;
+    var weakest = new List<int>();
+    for (int i = 0; i < k; i++)
+    {
+        int max = sumOfRow.Max();
+        int pivot = Array.IndexOf(sumOfRow, max);
+        for (int j = 0; j < sumsLength; j++)
+        {
+
+            if (!weakest.Contains(j) && sumOfRow[j] < sumOfRow[pivot])
+                pivot = j;
+        }
+        weakest.Add(pivot);
+    }
+
+
+
+
+
+    int[] aInt = weakest.ToArray();
+    return aInt;
 }
 
-
-int[][] someArray = CreateArray(10000, 10000);
+int[][] someArray = CreateArray(5, 5);
 Stopwatch sw = new Stopwatch();
 sw.Start();
 FillArrayRandomIter(someArray);
-sw.Stop();
-// ArrayToConsole(someArray);
-sw.Start();
-int[] result = KWeakestRows(someArray);
-// Console.WriteLine(String.Join(" ", result));
+ArrayToConsole(someArray);
+var result = KWeakestRows(someArray);
+Console.WriteLine();
+Console.WriteLine(String.Join(" ", result));
 sw.Stop();
 Console.WriteLine($"{sw.ElapsedMilliseconds}");
 
